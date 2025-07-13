@@ -4,15 +4,47 @@
   border: 1px solid #404040;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  cursor: move;
   user-select: none;
   transition: all 0.3s ease;
   position: relative;
 }
 
+/* Brought to front animation */
+.text-node.brought-to-front {
+  animation: bringToFront 0.3s ease-out;
+}
+
+@keyframes bringToFront {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .text-node:hover {
   border-color: #1a5a1a;
   box-shadow: 0 6px 20px rgba(26, 90, 26, 0.2);
+  transform: translateY(-2px);
+}
+
+/* When being dragged */
+.text-node.dragging {
+  opacity: 0.8;
+  transform: rotate(2deg) scale(1.02);
+  z-index: 9999 !important;
+  box-shadow: 0 15px 40px rgba(26, 90, 26, 0.4);
+}
+
+/* Selection state */
+.text-node.selected {
+  border-color: #1a5a1a;
+  box-shadow: 0 0 0 2px rgba(26, 90, 26, 0.4), 0 8px 25px rgba(26, 90, 26, 0.15);
+  transform: translateY(-1px);
 }
 
 .node-header {

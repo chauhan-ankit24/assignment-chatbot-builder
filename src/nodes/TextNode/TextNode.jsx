@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { useAppDispatch } from '../../store/hooks';
+import { useSelectedNode } from '../../store/hooks';
+import { updateNode, deleteNode } from '../../store/flowSlice';
 import './TextNode.css';
 
-const TextNode = ({ node, onUpdate, onDelete }) => {
+const TextNode = ({ node }) => {
+  const dispatch = useAppDispatch();
+  const selectedNode = useSelectedNode();
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState(node.data.message || 'If you like this project, give it a star on GitHub! ⭐ and connect with me on LinkedIn 🚀. See top right corner or in bottom bar (mobile)');
 
+  const isSelected = selectedNode === node.id;
+
   const handleSave = () => {
-    onUpdate(node.id, { message });
+    dispatch(updateNode({ nodeId: node.id, data: { message } }));
     setIsEditing(false);
   };
 
@@ -15,12 +22,12 @@ const TextNode = ({ node, onUpdate, onDelete }) => {
     setIsEditing(false);
   };
 
+  const handleDelete = () => {
+    dispatch(deleteNode(node.id));
+  };
+
   return (
-    <div className="text-node" style={{ 
-      position: 'absolute', 
-      left: node.position.x, 
-      top: node.position.y 
-    }}>
+    <div className={`text-node ${isSelected ? 'selected' : ''}`}>
       <div className="node-header">
         <div className="node-title">
           <span className="node-icon">💬</span>
@@ -36,7 +43,7 @@ const TextNode = ({ node, onUpdate, onDelete }) => {
           <button className="action-btn settings-btn" title="Settings">
             <span>⚙️</span>
           </button>
-          <button className="action-btn delete-btn" onClick={() => onDelete(node.id)} title="Delete">
+          <button className="action-btn delete-btn" onClick={handleDelete} title="Delete">
             <span>🗑️</span>
           </button>
         </div>

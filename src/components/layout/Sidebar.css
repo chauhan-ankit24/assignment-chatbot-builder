@@ -95,6 +95,12 @@
   background: #0d0d0d;
 }
 
+.node-item.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+  cursor: grabbing !important;
+}
+
 .node-item:active {
   cursor: grabbing;
   transform: scale(0.98);

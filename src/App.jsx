@@ -1,38 +1,36 @@
-import { useState, useRef } from "react";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
-import Canvas from "./components/Canvas";
+import React from "react";
+import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { store } from './store';
+import Navbar from "./components/layout/Navbar";
+import Sidebar from "./components/layout/Sidebar";
+import Canvas from "./components/layout/Canvas";
 import "./App.css";
 
-function App() {
-  const canvasRef = useRef(null);
-
-  const handleNodeClick = (nodeType, position) => {
-    if (canvasRef.current && canvasRef.current.addNode) {
-      canvasRef.current.addNode(nodeType, position);
-    }
-  };
-
-  const handleNodeAdd = (node) => {
-    console.log('Node added:', node);
-  };
-
+function AppContent() {
   return (
-    <div className="app">
-      <Navbar />
-      <div className="app-content">
-        <main className="main-content">
-          <div className="canvas-area">
-            <Canvas 
-              ref={canvasRef}
-              onNodeAdd={handleNodeAdd}
-              onNodeClick={handleNodeClick}
-            />
-          </div>
-        </main>
-        <Sidebar onNodeClick={handleNodeClick} />
+    <DndProvider backend={HTML5Backend}>
+      <div className="app">
+        <Navbar />
+        <div className="app-content">
+          <main className="main-content">
+            <div className="canvas-area">
+              <Canvas />
+            </div>
+          </main>
+          <Sidebar />
+        </div>
       </div>
-    </div>
+    </DndProvider>
+  );
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   );
 }
 

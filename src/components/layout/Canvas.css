@@ -62,6 +62,13 @@
   border: 2px dashed #1a5a1a;
   border-radius: 8px;
   pointer-events: none;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
 }
 
 /* Responsive */
