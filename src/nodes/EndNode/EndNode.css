@@ -1,0 +1,72 @@
+/* EndNode Styles */
+.end-node {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(225, 112, 85, 0.3);
+  border-radius: 12px;
+  width: 120px;
+  height: 60px;
+  box-shadow: 
+    0 8px 32px rgba(225, 112, 85, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.end-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(225, 112, 85, 0.1) 0%, 
+    rgba(214, 48, 49, 0.05) 100%);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.end-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.end-node-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #e17055;
+  filter: drop-shadow(0 2px 4px rgba(225, 112, 85, 0.3));
+}
+
+.end-node-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e17055;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(225, 112, 85, 0.2);
+}
+
+/* Hover effect for glass node */
+.end-node:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(225, 112, 85, 0.5);
+  box-shadow: 
+    0 12px 40px rgba(225, 112, 85, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Remove glow effect */

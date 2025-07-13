@@ -15,6 +15,8 @@ import {
 } from '../../store/flowSlice';
 import { DND_ITEM_TYPES } from '../../constants/dndTypes';
 import TextNode from '../../nodes/TextNode';
+import StartNode from '../../nodes/StartNode';
+import EndNode from '../../nodes/EndNode';
 import DraggableNode from '../../nodes/common/DraggableNode';
 import './Canvas.css';
 
@@ -144,8 +146,14 @@ const Canvas = () => {
           <>
             {nodes.map((node) => (
               <DraggableNode key={node.id} node={node}>
+                {node.type === 'start' && (
+                  <StartNode node={node} />
+                )}
                 {node.type === 'message' && (
                   <TextNode node={node} />
+                )}
+                {node.type === 'end' && (
+                  <EndNode node={node} />
                 )}
               </DraggableNode>
             ))}

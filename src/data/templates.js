@@ -11,7 +11,8 @@ import {
   BiRocket, 
   BiShoppingBag, 
   BiChart, 
-  BiSupport 
+  BiSupport,
+  BiPlayCircle 
 } from 'react-icons/bi';
 
 /**
@@ -19,6 +20,37 @@ import {
  * These templates provide starting points for common use cases
  */
 export const flowTemplates = [
+  {
+    id: 'basic_start_end',
+    name: 'Basic Start-End Flow',
+    description: 'A simple flow with start and end nodes',
+    thumbnail: BiPlayCircle,
+    category: 'basic',
+    nodes: [
+      {
+        id: 'start_1',
+        type: 'start',
+        position: { x: 100, y: 100 },
+        data: {
+          message: 'Flow started - ready to begin!',
+        },
+      },
+      {
+        id: 'end_1',
+        type: 'end',
+        position: { x: 100, y: 300 },
+        data: {
+          message: 'Thank you for using our service! Have a great day!',
+        },
+      },
+    ],
+    connections: [
+      {
+        from: 'start_1',
+        to: 'end_1',
+      },
+    ],
+  },
   {
     id: 'customer_support',
     name: 'Customer Support Flow',

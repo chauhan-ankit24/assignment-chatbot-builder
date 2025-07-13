@@ -7,16 +7,8 @@
 
 import { 
   BiMessageRounded, 
-  BiQuestionMark, 
-  BiGitBranch, 
-  BiSolidZap, 
-  BiEdit, 
-  BiGlobe, 
-  BiTime, 
-  BiFlag,
-  BiUser,
-  BiCog,
-  BiPlay
+  BiPlayCircle,
+  BiStopCircle
 } from 'react-icons/bi';
 
 /**
@@ -24,6 +16,14 @@ import {
  * Defines all node types that can be used in the flow builder
  */
 export const nodeTypes = [
+  { 
+    id: 'start', 
+    name: 'Start Node', 
+    icon: BiPlayCircle, 
+    description: 'Start of the conversation flow',
+    category: 'flow',
+    color: '#00b894',
+  },
   { 
     id: 'message', 
     name: 'Message Node', 
@@ -33,60 +33,12 @@ export const nodeTypes = [
     color: '#25D366',
   },
   { 
-    id: 'question', 
-    name: 'Question Node', 
-    icon: BiQuestionMark, 
-    description: 'Ask user a question',
-    category: 'interaction',
-    color: '#667eea',
-  },
-  { 
-    id: 'condition', 
-    name: 'Condition Node', 
-    icon: BiGitBranch, 
-    description: 'Add conditional logic',
-    category: 'logic',
-    color: '#f093fb',
-  },
-  { 
-    id: 'action', 
-    name: 'Action Node', 
-    icon: BiSolidZap, 
-    description: 'Perform an action',
-    category: 'action',
-    color: '#ffeaa7',
-  },
-  { 
-    id: 'input', 
-    name: 'Input Node', 
-    icon: BiEdit, 
-    description: 'Collect user input',
-    category: 'interaction',
-    color: '#667eea',
-  },
-  { 
-    id: 'api', 
-    name: 'API Call', 
-    icon: BiGlobe, 
-    description: 'Make external API call',
-    category: 'action',
-    color: '#ffeaa7',
-  },
-  { 
-    id: 'delay', 
-    name: 'Delay Node', 
-    icon: BiTime, 
-    description: 'Add time delay',
-    category: 'action',
-    color: '#ffeaa7',
-  },
-  { 
     id: 'end', 
     name: 'End Node', 
-    icon: BiFlag, 
+    icon: BiStopCircle, 
     description: 'End conversation',
     category: 'flow',
-    color: '#fd79a8',
+    color: '#e17055',
   },
 ];
 
@@ -95,14 +47,9 @@ export const nodeTypes = [
  * These are the initial messages displayed when a node is created
  */
 export const defaultMessages = {
+  start: 'Flow started - ready to begin!',
   message: 'Hello! How can I help you today?',
-  question: 'What would you like to know?',
-  condition: 'If condition is true...',
-  action: 'Execute action',
-  input: 'Please provide your input',
-  api: 'Making API call...',
-  delay: 'Please wait...',
-  end: 'Thank you for using our service!',
+  end: 'Thank you for using our service! Have a great day!',
 };
 
 /**
@@ -126,39 +73,18 @@ export const canvasSettings = {
  */
 export const nodeCategories = [
   {
+    id: 'flow',
+    name: 'Flow Control',
+    color: '#00b894',
+    icon: BiPlayCircle,
+    description: 'Nodes for managing conversation flow',
+  },
+  {
     id: 'communication',
     name: 'Communication',
     color: '#25D366',
     icon: BiMessageRounded,
     description: 'Nodes for sending messages and communicating with users',
-  },
-  {
-    id: 'interaction',
-    name: 'User Interaction',
-    color: '#667eea',
-    icon: BiUser,
-    description: 'Nodes for collecting user input and interactions',
-  },
-  {
-    id: 'logic',
-    name: 'Logic & Flow',
-    color: '#f093fb',
-    icon: BiGitBranch,
-    description: 'Nodes for conditional logic and flow control',
-  },
-  {
-    id: 'action',
-    name: 'Actions',
-    color: '#ffeaa7',
-    icon: BiSolidZap,
-    description: 'Nodes for performing actions and API calls',
-  },
-  {
-    id: 'flow',
-    name: 'Flow Control',
-    color: '#fd79a8',
-    icon: BiPlay,
-    description: 'Nodes for managing conversation flow',
   },
 ];
 

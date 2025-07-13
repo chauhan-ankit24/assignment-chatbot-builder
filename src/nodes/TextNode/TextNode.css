@@ -1,12 +1,32 @@
 .text-node {
   width: 350px;
-  background: #1a1a1a;
-  border: 1px solid #404040;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(37, 211, 102, 0.3);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(37, 211, 102, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   user-select: none;
   transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+}
+
+.text-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(37, 211, 102, 0.1) 0%, 
+    rgba(26, 90, 26, 0.05) 100%);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Brought to front animation */
@@ -27,34 +47,47 @@
 }
 
 .text-node:hover {
-  border-color: #1a5a1a;
-  box-shadow: 0 6px 20px rgba(26, 90, 26, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(37, 211, 102, 0.5);
+  box-shadow: 
+    0 12px 40px rgba(37, 211, 102, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
 /* When being dragged */
 .text-node.dragging {
-  opacity: 0.8;
+  opacity: 0.9;
   transform: rotate(2deg) scale(1.02);
   z-index: 9999 !important;
-  box-shadow: 0 15px 40px rgba(26, 90, 26, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 20px 60px rgba(37, 211, 102, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* Selection state */
 .text-node.selected {
-  border-color: #1a5a1a;
-  box-shadow: 0 0 0 2px rgba(26, 90, 26, 0.4), 0 8px 25px rgba(26, 90, 26, 0.15);
+  border-color: rgba(37, 211, 102, 0.7);
+  box-shadow: 
+    0 0 0 2px rgba(37, 211, 102, 0.4), 
+    0 12px 40px rgba(37, 211, 102, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
 .node-header {
-  background: #262626;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   padding: 12px 16px;
-  border-bottom: 1px solid #404040;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px 12px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .node-title {
@@ -76,21 +109,26 @@
 }
 
 .action-btn {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 24px;
   height: 24px;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .whatsapp-btn {
@@ -111,10 +149,19 @@
 
 .delete-btn:hover {
   background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.2);
 }
 
 .node-content {
   padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 0 0 12px 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .message-section {
@@ -123,7 +170,7 @@
 
 .message-section label {
   display: block;
-  color: #b3b3b3;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 8px;
@@ -132,8 +179,10 @@
 }
 
 .message-display {
-  background: #0d0d0d;
-  border: 1px solid #404040;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 12px;
   color: #ffffff;
@@ -141,17 +190,20 @@
   line-height: 1.4;
   cursor: text;
   min-height: 60px;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .message-display:hover {
-  border-color: #1a5a1a;
+  border-color: rgba(37, 211, 102, 0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .edit-mode textarea {
   width: 100%;
-  background: #0d0d0d;
-  border: 1px solid #1a5a1a;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(37, 211, 102, 0.4);
   border-radius: 8px;
   padding: 12px;
   color: #ffffff;
@@ -160,12 +212,13 @@
   resize: vertical;
   min-height: 80px;
   font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 .edit-mode textarea:focus {
   outline: none;
-  border-color: #145014;
-  box-shadow: 0 0 0 2px rgba(26, 90, 26, 0.2);
+  border-color: rgba(37, 211, 102, 0.6);
+  box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
 }
 
 .edit-buttons {
@@ -183,35 +236,50 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .save-btn {
-  background: #1a5a1a;
+  background: rgba(37, 211, 102, 0.3);
   color: white;
+  border: 1px solid rgba(37, 211, 102, 0.4);
 }
 
 .save-btn:hover {
-  background: #145014;
+  background: rgba(37, 211, 102, 0.4);
+  border-color: rgba(37, 211, 102, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 211, 102, 0.2);
 }
 
 .cancel-btn {
-  background: transparent;
-  color: #b3b3b3;
-  border: 1px solid #404040;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .node-info {
-  border-top: 1px solid #404040;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 0 0 12px 12px;
+  margin: 0 -16px -16px -16px;
+  padding: 12px 16px;
 }
 
 .channel-info {
   font-size: 12px;
-  color: #b3b3b3;
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 8px;
   line-height: 1.4;
 }
@@ -222,12 +290,12 @@
 
 .node-id {
   font-size: 11px;
-  color: #666666;
+  color: rgba(255, 255, 255, 0.6);
   font-family: 'Courier New', monospace;
 }
 
 .node-id span {
-  color: #888888;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Connection points */
@@ -235,16 +303,21 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  background: #1a5a1a;
-  border: 2px solid #0d0d0d;
+  background: rgba(37, 211, 102, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 2px solid rgba(37, 211, 102, 0.5);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
 }
 
 .connection-point:hover {
-  background: #145014;
+  background: rgba(37, 211, 102, 0.5);
+  border-color: rgba(37, 211, 102, 0.7);
   transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
 }
 
 .connection-point.input {
