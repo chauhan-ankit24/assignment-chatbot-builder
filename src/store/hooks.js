@@ -1,3 +1,9 @@
+/**
+ * Custom Redux Hooks
+ * 
+ * This file provides custom hooks for accessing Redux state and actions.
+ * These hooks use memoized selectors for optimal performance.
+ */
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   selectNodes, 
@@ -5,14 +11,21 @@ import {
   selectConnectionCount,
   selectNodeById,
   selectNodesByType,
-  selectNodesSortedByZIndex 
+  selectNodesSortedByZIndex,
+  selectIsSidebarCollapsed,
+  selectTheme,
+  selectShowSettings,
 } from './selectors';
 
-// Custom hooks for typed Redux usage
+/**
+ * Base Redux hooks
+ */
 export const useAppDispatch = () => useDispatch();
 export const useAppSelector = (selector) => useSelector(selector);
 
-// Flow selectors
+/**
+ * Flow-related hooks
+ */
 export const useNodes = () => useAppSelector(selectNodes);
 export const useSelectedNode = () => useAppSelector(state => state.flow.selectedNode);
 export const useDraggedNode = () => useAppSelector(state => state.flow.draggedNode);
@@ -21,16 +34,58 @@ export const useCanvasPosition = () => useAppSelector(state => state.flow.canvas
 export const useZoom = () => useAppSelector(state => state.flow.zoom);
 export const useMaxZIndex = () => useAppSelector(state => state.flow.maxZIndex);
 
-// UI selectors
-export const useIsSidebarCollapsed = () => useAppSelector(state => state.ui.isCollapsed);
+/**
+ * UI-related hooks
+ */
+export const useIsSidebarCollapsed = () => useAppSelector(selectIsSidebarCollapsed);
 export const useSelectedNodeType = () => useAppSelector(state => state.ui.selectedNodeType);
 export const useIsDragging = () => useAppSelector(state => state.ui.isDragging);
-export const useShowSettings = () => useAppSelector(state => state.ui.showSettings);
-export const useTheme = () => useAppSelector(state => state.ui.theme);
+export const useShowSettings = () => useAppSelector(selectShowSettings);
+export const useTheme = () => useAppSelector(selectTheme);
 
-// Computed selectors using memoized selectors
+/**
+ * Computed state hooks using memoized selectors
+ */
 export const useNodeCount = () => useAppSelector(selectNodeCount);
 export const useConnectionCount = () => useAppSelector(selectConnectionCount);
+
+/**
+ * Parameterized hooks
+ */
 export const useNodeById = (nodeId) => useAppSelector(state => selectNodeById(state, nodeId));
 export const useNodesByType = (nodeType) => useAppSelector(state => selectNodesByType(state, nodeType));
+
+/**
+ * Complex computed hooks
+ */
 export const useNodesSortedByZIndex = () => useAppSelector(selectNodesSortedByZIndex);
+
+/**
+ * Convenience hooks for common operations
+ */
+export const useFlowStats = () => {
+  const nodeCount = useNodeCount();
+  const connectionCount = useConnectionCount();
+  
+  return {
+    nodeCount,
+    connectionCount,
+    isEmpty: nodeCount === 0,
+  };
+};
+
+export const useCanvasState = () => {
+  const position = useCanvasPosition();
+  const zoom = useZoom();
+  const selectedNode = useSelectedNode();
+  const draggedNode = useDraggedNode();
+  
+  return {
+    position,
+    zoom,
+    selectedNode,
+    draggedNode,
+    hasSelection: selectedNode !== null,
+    isDragging: draggedNode !== null,
+  };
+};

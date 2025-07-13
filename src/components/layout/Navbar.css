@@ -1,3 +1,10 @@
+/**
+ * Navbar Styles
+ * 
+ * Styles for the top navigation bar including responsive design
+ * and interactive elements.
+ */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -15,12 +22,31 @@
   z-index: 1000;
 }
 
+/* Brand section */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .navbar-brand h1 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
+.node-counter {
+  background: #1a5a1a;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Navigation menu */
 .navbar-menu {
   flex: 1;
   display: flex;
@@ -45,7 +71,7 @@
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 6px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   font-weight: 500;
 }
 
@@ -54,6 +80,20 @@
   text-decoration: none;
 }
 
+/* Navigation buttons */
+.nav-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Action buttons */
 .navbar-actions {
   display: flex;
   gap: 10px;
@@ -67,6 +107,18 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
 }
 
 .btn-primary {
@@ -74,9 +126,8 @@
   color: white;
 }
 
-.btn-primary:hover {
+.btn-primary:not(:disabled):hover {
   background-color: #145014;
-  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -85,12 +136,30 @@
   border: 2px solid white;
 }
 
-.btn-secondary:hover {
+.btn-secondary:not(:disabled):hover {
   background-color: white;
   color: #1a1a1a;
-  transform: translateY(-1px);
 }
 
+/* Button loading state */
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .navbar {
     padding: 0 10px;
@@ -112,5 +181,29 @@
   .btn {
     padding: 6px 12px;
     font-size: 12px;
+  }
+  
+  .node-counter {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-menu {
+    display: none;
+  }
+  
+  .navbar-brand h1 {
+    font-size: 1rem;
+  }
+  
+  .navbar-actions {
+    gap: 8px;
+  }
+  
+  .btn {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }

@@ -1,13 +1,27 @@
 {
   "name": "chatbot-flowbuilder",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A visual flow builder for creating chatbot conversations with drag-and-drop interface",
   "type": "module",
+  "keywords": [
+    "chatbot",
+    "flow-builder",
+    "react",
+    "redux",
+    "drag-and-drop",
+    "visual-editor"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
+    "clean": "rm -rf dist node_modules/.vite",
+    "analyze": "npm run build && npx vite-bundle-analyzer dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -27,5 +41,21 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "vite": "^7.0.4"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
