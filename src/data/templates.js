@@ -5,6 +5,15 @@
  * as well as configuration for connections and node categories.
  */
 
+import { 
+  BiHeadphone, 
+  BiQuestionMark, 
+  BiRocket, 
+  BiShoppingBag, 
+  BiChart, 
+  BiSupport 
+} from 'react-icons/bi';
+
 /**
  * Pre-built Flow Templates
  * These templates provide starting points for common use cases
@@ -14,7 +23,7 @@ export const flowTemplates = [
     id: 'customer_support',
     name: 'Customer Support Flow',
     description: 'A comprehensive customer support chatbot flow with escalation paths',
-    thumbnail: '🎧',
+    thumbnail: BiHeadphone,
     category: 'support',
     nodes: [
       {
@@ -58,7 +67,7 @@ export const flowTemplates = [
     id: 'lead_generation',
     name: 'Lead Generation Flow',
     description: 'Collect leads and qualify prospects effectively',
-    thumbnail: '📈',
+    thumbnail: BiChart,
     category: 'marketing',
     nodes: [
       {
@@ -109,7 +118,7 @@ export const flowTemplates = [
     id: 'simple_faq',
     name: 'Simple FAQ Bot',
     description: 'Basic FAQ chatbot with common questions and answers',
-    thumbnail: '❓',
+    thumbnail: BiQuestionMark,
     category: 'support',
     nodes: [
       {
@@ -144,7 +153,7 @@ export const flowTemplates = [
     id: 'onboarding',
     name: 'User Onboarding Flow',
     description: 'Guide new users through the onboarding process',
-    thumbnail: '🚀',
+    thumbnail: BiRocket,
     category: 'onboarding',
     nodes: [
       {
@@ -194,28 +203,28 @@ export const templateCategories = [
   {
     id: 'support',
     name: 'Customer Support',
-    icon: '🎧',
+    icon: BiHeadphone,
     color: '#4a90e2',
     description: 'Templates for customer service and support workflows',
   },
   {
     id: 'marketing',
     name: 'Marketing & Sales',
-    icon: '📈',
+    icon: BiChart,
     color: '#7ed321',
     description: 'Templates for lead generation and marketing campaigns',
   },
   {
     id: 'onboarding',
     name: 'User Onboarding',
-    icon: '🚀',
+    icon: BiRocket,
     color: '#f5a623',
     description: 'Templates for guiding new users through setup processes',
   },
   {
     id: 'ecommerce',
     name: 'E-commerce',
-    icon: '🛒',
+    icon: BiShoppingBag,
     color: '#d0021b',
     description: 'Templates for online shopping and order management',
   },

@@ -5,6 +5,20 @@
  * It includes node types, default messages, and canvas settings.
  */
 
+import { 
+  BiMessageRounded, 
+  BiQuestionMark, 
+  BiGitBranch, 
+  BiSolidZap, 
+  BiEdit, 
+  BiGlobe, 
+  BiTime, 
+  BiFlag,
+  BiUser,
+  BiCog,
+  BiPlay
+} from 'react-icons/bi';
+
 /**
  * Available Node Types
  * Defines all node types that can be used in the flow builder
@@ -13,7 +27,7 @@ export const nodeTypes = [
   { 
     id: 'message', 
     name: 'Message Node', 
-    icon: '💬', 
+    icon: BiMessageRounded, 
     description: 'Send a message to user',
     category: 'communication',
     color: '#25D366',
@@ -21,7 +35,7 @@ export const nodeTypes = [
   { 
     id: 'question', 
     name: 'Question Node', 
-    icon: '❓', 
+    icon: BiQuestionMark, 
     description: 'Ask user a question',
     category: 'interaction',
     color: '#667eea',
@@ -29,7 +43,7 @@ export const nodeTypes = [
   { 
     id: 'condition', 
     name: 'Condition Node', 
-    icon: '🔀', 
+    icon: BiGitBranch, 
     description: 'Add conditional logic',
     category: 'logic',
     color: '#f093fb',
@@ -37,7 +51,7 @@ export const nodeTypes = [
   { 
     id: 'action', 
     name: 'Action Node', 
-    icon: '⚡', 
+    icon: BiSolidZap, 
     description: 'Perform an action',
     category: 'action',
     color: '#ffeaa7',
@@ -45,7 +59,7 @@ export const nodeTypes = [
   { 
     id: 'input', 
     name: 'Input Node', 
-    icon: '📝', 
+    icon: BiEdit, 
     description: 'Collect user input',
     category: 'interaction',
     color: '#667eea',
@@ -53,7 +67,7 @@ export const nodeTypes = [
   { 
     id: 'api', 
     name: 'API Call', 
-    icon: '🌐', 
+    icon: BiGlobe, 
     description: 'Make external API call',
     category: 'action',
     color: '#ffeaa7',
@@ -61,7 +75,7 @@ export const nodeTypes = [
   { 
     id: 'delay', 
     name: 'Delay Node', 
-    icon: '⏱️', 
+    icon: BiTime, 
     description: 'Add time delay',
     category: 'action',
     color: '#ffeaa7',
@@ -69,7 +83,7 @@ export const nodeTypes = [
   { 
     id: 'end', 
     name: 'End Node', 
-    icon: '🏁', 
+    icon: BiFlag, 
     description: 'End conversation',
     category: 'flow',
     color: '#fd79a8',
@@ -115,35 +129,35 @@ export const nodeCategories = [
     id: 'communication',
     name: 'Communication',
     color: '#25D366',
-    icon: '💬',
+    icon: BiMessageRounded,
     description: 'Nodes for sending messages and communicating with users',
   },
   {
     id: 'interaction',
     name: 'User Interaction',
     color: '#667eea',
-    icon: '👤',
+    icon: BiUser,
     description: 'Nodes for collecting user input and interactions',
   },
   {
     id: 'logic',
     name: 'Logic & Flow',
     color: '#f093fb',
-    icon: '🔀',
+    icon: BiGitBranch,
     description: 'Nodes for conditional logic and flow control',
   },
   {
     id: 'action',
     name: 'Actions',
     color: '#ffeaa7',
-    icon: '⚡',
+    icon: BiSolidZap,
     description: 'Nodes for performing actions and API calls',
   },
   {
     id: 'flow',
     name: 'Flow Control',
     color: '#fd79a8',
-    icon: '🏁',
+    icon: BiPlay,
     description: 'Nodes for managing conversation flow',
   },
 ];

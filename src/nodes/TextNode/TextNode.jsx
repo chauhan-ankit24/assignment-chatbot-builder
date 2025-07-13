@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import { BiMessageRounded, BiMobile, BiExpandAlt, BiCog, BiTrash } from 'react-icons/bi';
 import { useAppDispatch } from '../../store/hooks';
 import { useSelectedNode } from '../../store/hooks';
 import { updateNode, deleteNode } from '../../store/flowSlice';
 import './TextNode.css';
 
+/**
+ * TextNode Component
+ * 
+ * Renders a text message node with editing capabilities
+ */
 const TextNode = ({ node }) => {
   const dispatch = useAppDispatch();
   const selectedNode = useSelectedNode();
   const [isEditing, setIsEditing] = useState(false);
-  const [message, setMessage] = useState(node.data.message || 'If you like this project, give it a star on GitHub! ⭐ and connect with me on LinkedIn 🚀. See top right corner or in bottom bar (mobile)');
+  const [message, setMessage] = useState(node.data.message || 'If you like this project, give it a star on GitHub and connect with me on LinkedIn. See top right corner or in bottom bar (mobile)');
 
   const isSelected = selectedNode === node.id;
 
@@ -30,21 +36,23 @@ const TextNode = ({ node }) => {
     <div className={`text-node ${isSelected ? 'selected' : ''}`}>
       <div className="node-header">
         <div className="node-title">
-          <span className="node-icon">💬</span>
+          <span className="node-icon">
+            <BiMessageRounded size={16} />
+          </span>
           <span>TEXT MESSAGE</span>
         </div>
         <div className="node-actions">
           <button className="action-btn whatsapp-btn" title="WhatsApp">
-            <span>📱</span>
+            <BiMobile size={16} />
           </button>
           <button className="action-btn resize-btn" title="Resize">
-            <span>◇</span>
+            <BiExpandAlt size={16} />
           </button>
           <button className="action-btn settings-btn" title="Settings">
-            <span>⚙️</span>
+            <BiCog size={16} />
           </button>
           <button className="action-btn delete-btn" onClick={handleDelete} title="Delete">
-            <span>🗑️</span>
+            <BiTrash size={16} />
           </button>
         </div>
       </div>

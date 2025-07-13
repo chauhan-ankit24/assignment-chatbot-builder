@@ -12,6 +12,116 @@
   cursor: default;
 }
 
+.canvas-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+/* Zoom Controls */
+.zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  gap: 2px;
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.zoom-controls:hover {
+  background: rgba(26, 26, 26, 0.98);
+  border-color: #1a5a1a;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.zoom-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  user-select: none;
+  position: relative;
+}
+
+.zoom-btn:hover:not(:disabled) {
+  background: rgba(26, 90, 26, 0.3);
+  transform: scale(1.05);
+  color: #ffffff;
+}
+
+.zoom-btn:active:not(:disabled) {
+  transform: scale(0.95);
+  background: rgba(26, 90, 26, 0.5);
+}
+
+.zoom-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: #666666;
+}
+
+.zoom-reset {
+  min-width: 48px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #b3b3b3;
+  border-left: 1px solid #404040;
+  border-right: 1px solid #404040;
+  margin: 0 2px;
+}
+
+.zoom-reset:hover:not(:disabled) {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.zoom-out {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.zoom-in {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Zoom level indicator */
+.zoom-controls::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(26, 26, 26, 0.95);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.zoom-controls:hover::before {
+  opacity: 1;
+}
+
 .canvas-placeholder {
   position: absolute;
   top: 50%;
@@ -87,5 +197,30 @@
   
   .placeholder-content p {
     font-size: 0.9rem;
+  }
+  
+  .zoom-controls {
+    bottom: 15px;
+    left: 15px;
+    padding: 3px;
+  }
+  
+  .zoom-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  .zoom-reset {
+    min-width: 40px;
+    font-size: 10px;
+  }
+  
+  .zoom-out {
+    font-size: 18px;
+  }
+  
+  .zoom-in {
+    font-size: 16px;
   }
 }

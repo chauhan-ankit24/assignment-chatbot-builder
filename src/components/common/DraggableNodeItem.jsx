@@ -5,8 +5,14 @@ import { useAppDispatch } from '../../store/hooks';
 import { addNode } from '../../store/flowSlice';
 import { canvasSettings } from '../../data/mockData';
 
+/**
+ * DraggableNodeItem Component
+ * 
+ * Renders a draggable node item in the sidebar that can be dropped onto the canvas
+ */
 const DraggableNodeItem = ({ node, isCollapsed, nodeCount }) => {
   const dispatch = useAppDispatch();
+  const IconComponent = node.icon;
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DND_ITEM_TYPES.NODE_FROM_SIDEBAR,
@@ -36,7 +42,9 @@ const DraggableNodeItem = ({ node, isCollapsed, nodeCount }) => {
         cursor: isDragging ? 'grabbing' : 'grab'
       }}
     >
-      <span className="node-icon">{node.icon}</span>
+      <span className="node-icon">
+        <IconComponent size={20} style={{ color: node.color }} />
+      </span>
       {!isCollapsed && (
         <div className="node-info">
           <span className="node-name">{node.name}</span>

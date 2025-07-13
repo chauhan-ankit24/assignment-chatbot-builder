@@ -5,6 +5,7 @@
  * Provides consistent navigation across the application.
  */
 import React from 'react';
+import { SiChatbot } from 'react-icons/si';
 import { useAppDispatch } from '../../store/hooks';
 import { clearFlow } from '../../store/flowSlice';
 import { useFlowStats } from '../../store/hooks';
@@ -64,7 +65,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Brand section */}
       <div className="navbar-brand">
-        <h1>🤖 Chatbot Flow Builder</h1>
+        <h1><SiChatbot size={24} style={{ marginRight: '8px', verticalAlign: 'middle' }} />Chatbot Flow Builder</h1>
         {nodeCount > 0 && (
           <span className="node-counter" title={`${nodeCount} nodes in flow`}>
             {nodeCount}

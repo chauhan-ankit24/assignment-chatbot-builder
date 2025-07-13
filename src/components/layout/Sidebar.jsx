@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { useAppDispatch } from '../../store/hooks';
 import { 
   useIsSidebarCollapsed, 
@@ -29,7 +30,7 @@ const Sidebar = () => {
           onClick={handleToggleSidebar}
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {isCollapsed ? '▶' : '◀'}
+          {isCollapsed ? <MdChevronRight size={20} /> : <MdChevronLeft size={20} />}
         </button>
       </div>
       
