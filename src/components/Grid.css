@@ -1,0 +1,65 @@
+.grid-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.major-grid {
+  animation: gridFadeIn 0.3s ease-in-out;
+}
+
+.minor-grid {
+  animation: gridFadeIn 0.3s ease-in-out;
+}
+
+.grid-dots {
+  animation: gridFadeIn 0.3s ease-in-out;
+}
+
+@keyframes gridFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Grid toggle button specific styles */
+.grid-toggle-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+.grid-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.grid-toggle-btn.active {
+  background: rgba(37, 211, 102, 0.2);
+  border-color: rgba(37, 211, 102, 0.4);
+  color: #25D366;
+}
+
+.grid-toggle-btn.active:hover {
+  background: rgba(37, 211, 102, 0.3);
+  border-color: rgba(37, 211, 102, 0.5);
+}

@@ -100,6 +100,28 @@ const flowSlice = createSlice({
      */
     deleteNode: (state, action) => {
       const nodeId = action.payload;
+      const node = state.nodes.find(n => n.id === nodeId);
+      
+      if (node) {
+        // Remove all connections from this node first
+        node.connections.inputs.forEach(inputNodeId => {
+          const inputNode = state.nodes.find(n => n.id === inputNodeId);
+          if (inputNode) {
+            inputNode.connections.outputs = inputNode.connections.outputs.filter(
+              id => id !== nodeId
+            );
+          }
+        });
+        
+        node.connections.outputs.forEach(outputNodeId => {
+          const outputNode = state.nodes.find(n => n.id === outputNodeId);
+          if (outputNode) {
+            outputNode.connections.inputs = outputNode.connections.inputs.filter(
+              id => id !== nodeId
+            );
+          }
+        });
+      }
       
       // Remove node from nodes array
       state.nodes = state.nodes.filter(n => n.id !== nodeId);
@@ -200,6 +222,81 @@ const flowSlice = createSlice({
         state.maxZIndex += 1;
       }
     },
+
+    /**
+     * Create a connection between two nodes
+     */
+    createConnection: (state, action) => {
+      const { sourceNodeId, targetNodeId } = action.payload;
+      const sourceNode = state.nodes.find(n => n.id === sourceNodeId);
+      const targetNode = state.nodes.find(n => n.id === targetNodeId);
+      
+      if (sourceNode && targetNode && sourceNodeId !== targetNodeId) {
+        // Add target to source's outputs if not already connected
+        if (!sourceNode.connections.outputs.includes(targetNodeId)) {
+          sourceNode.connections.outputs.push(targetNodeId);
+        }
+        
+        // Add source to target's inputs if not already connected
+        if (!targetNode.connections.inputs.includes(sourceNodeId)) {
+          targetNode.connections.inputs.push(sourceNodeId);
+        }
+      }
+    },
+
+    /**
+     * Remove a connection between two nodes
+     */
+    removeConnection: (state, action) => {
+      const { sourceNodeId, targetNodeId } = action.payload;
+      const sourceNode = state.nodes.find(n => n.id === sourceNodeId);
+      const targetNode = state.nodes.find(n => n.id === targetNodeId);
+      
+      if (sourceNode && targetNode) {
+        // Remove target from source's outputs
+        sourceNode.connections.outputs = sourceNode.connections.outputs.filter(
+          id => id !== targetNodeId
+        );
+        
+        // Remove source from target's inputs
+        targetNode.connections.inputs = targetNode.connections.inputs.filter(
+          id => id !== sourceNodeId
+        );
+      }
+    },
+
+    /**
+     * Remove all connections from a node
+     */
+    removeAllConnections: (state, action) => {
+      const nodeId = action.payload;
+      const node = state.nodes.find(n => n.id === nodeId);
+      
+      if (node) {
+        // Remove this node from all connected nodes
+        node.connections.inputs.forEach(inputNodeId => {
+          const inputNode = state.nodes.find(n => n.id === inputNodeId);
+          if (inputNode) {
+            inputNode.connections.outputs = inputNode.connections.outputs.filter(
+              id => id !== nodeId
+            );
+          }
+        });
+        
+        node.connections.outputs.forEach(outputNodeId => {
+          const outputNode = state.nodes.find(n => n.id === outputNodeId);
+          if (outputNode) {
+            outputNode.connections.inputs = outputNode.connections.inputs.filter(
+              id => id !== nodeId
+            );
+          }
+        });
+        
+        // Clear the node's connections
+        node.connections.inputs = [];
+        node.connections.outputs = [];
+      }
+    },
   },
 });
 
@@ -217,6 +314,9 @@ export const {
   setZoom,
   clearFlow,
   duplicateNode,
+  createConnection,
+  removeConnection,
+  removeAllConnections,
 } = flowSlice.actions;
 
 // Export reducer

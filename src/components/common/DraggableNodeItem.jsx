@@ -10,7 +10,7 @@ import { canvasSettings } from '../../data/mockData';
  * 
  * Renders a draggable node item in the sidebar that can be dropped onto the canvas
  */
-const DraggableNodeItem = ({ node, isCollapsed, nodeCount }) => {
+const DraggableNodeItem = ({ node, isCollapsed }) => {
   const dispatch = useAppDispatch();
   const IconComponent = node.icon;
 
@@ -20,13 +20,24 @@ const DraggableNodeItem = ({ node, isCollapsed, nodeCount }) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }), [node.id]);
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (!dropResult) {
+        // If dropped outside canvas, add to default position
+        const position = { 
+          x: canvasSettings.defaultNodePosition.x, 
+          y: canvasSettings.defaultNodePosition.y
+        };
+        dispatch(addNode({ nodeType: item.nodeType, position }));
+      }
+    }
+  }), [node.id, dispatch]);
 
   const handleClick = () => {
-    // Add node to center of canvas with some offset based on existing nodes
+    // Add node to center of canvas
     const position = { 
       x: canvasSettings.defaultNodePosition.x, 
-      y: canvasSettings.defaultNodePosition.y + (nodeCount * canvasSettings.nodeSpacing) 
+      y: canvasSettings.defaultNodePosition.y
     };
     dispatch(addNode({ nodeType: node.id, position }));
   };
@@ -34,22 +45,19 @@ const DraggableNodeItem = ({ node, isCollapsed, nodeCount }) => {
   return (
     <div 
       ref={drag}
-      className={`node-item ${isDragging ? 'dragging' : ''}`}
+      className={`node-item ${isDragging ? 'dragging' : ''} ${isCollapsed ? 'collapsed' : ''}`}
       onClick={handleClick}
-      title={isCollapsed ? node.name : node.description}
+      title={node.description}
       style={{
         opacity: isDragging ? 0.5 : 1,
         cursor: isDragging ? 'grabbing' : 'grab'
       }}
     >
-      <span className="node-icon">
-        <IconComponent size={20} style={{ color: node.color }} />
-      </span>
+      <div className="node-icon">
+        <IconComponent size={isCollapsed ? 18 : 20} style={{ color: node.color }} />
+      </div>
       {!isCollapsed && (
-        <div className="node-info">
-          <span className="node-name">{node.name}</span>
-          <span className="node-desc">{node.description}</span>
-        </div>
+        <span className="node-name">{node.name}</span>
       )}
     </div>
   );

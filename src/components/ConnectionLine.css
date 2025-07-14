@@ -1,0 +1,34 @@
+.connection-line-svg {
+  pointer-events: none;
+  overflow: visible;
+}
+
+.connection-path {
+  filter: drop-shadow(0 2px 4px rgba(37, 211, 102, 0.3));
+  transition: stroke-width 0.3s ease;
+}
+
+.connection-path:hover {
+  stroke: rgba(37, 211, 102, 1);
+  stroke-width: 3;
+  filter: drop-shadow(0 4px 8px rgba(37, 211, 102, 0.5));
+}
+
+/* Animated connection line */
+.connection-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawConnection 0.8s ease-out forwards;
+}
+
+@keyframes drawConnection {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Glass effect for connection lines */
+.connection-path {
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}

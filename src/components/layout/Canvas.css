@@ -9,23 +9,55 @@
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
   overflow: hidden;
-  cursor: default;
+  cursor: grab;
+  user-select: none;
+}
+
+.canvas.pan-mode {
+  cursor: grab;
+}
+
+.canvas.pan-mode:active {
+  cursor: grabbing;
+}
+
+.canvas:active {
+  cursor: grabbing;
 }
 
 .canvas-content {
   width: 100%;
   height: 100%;
   position: relative;
-  transition: transform 0.2s ease;
+  transition: transform 0.1s ease;
+  isolation: isolate;
+}
+
+/* Ensure grid is behind everything */
+.canvas-content > .grid-container {
+  z-index: -1;
+}
+
+/* Node positioning above grid */
+.canvas-content > div:not(.grid-container) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Placeholder positioning */
+.canvas-placeholder {
+  position: relative;
+  z-index: 2;
 }
 
 /* Zoom Controls */
 .zoom-controls {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 20px;
   display: flex;
-  gap: 2px;
+  align-items: center;
+  gap: 8px;
   background: rgba(26, 26, 26, 0.95);
   border: 1px solid #404040;
   border-radius: 8px;
@@ -42,39 +74,54 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.zoom-btn {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+.zoom-controls .zoom-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
-  transition: all 0.2s ease;
-  user-select: none;
-  position: relative;
+  min-width: 40px;
+  height: 40px;
 }
 
-.zoom-btn:hover:not(:disabled) {
-  background: rgba(26, 90, 26, 0.3);
-  transform: scale(1.05);
-  color: #ffffff;
+.zoom-controls .zoom-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
-.zoom-btn:active:not(:disabled) {
-  transform: scale(0.95);
-  background: rgba(26, 90, 26, 0.5);
-}
-
-.zoom-btn:disabled {
-  opacity: 0.4;
+.zoom-controls .zoom-btn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
-  color: #666666;
+}
+
+.zoom-controls .zoom-btn:disabled:hover {
+  transform: none;
+}
+
+.zoom-controls .zoom-indicator {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 }
 
 .zoom-reset {
@@ -159,26 +206,167 @@
 
 /* Canvas drop zone styling */
 .canvas.drag-over {
-  background-color: rgba(26, 90, 26, 0.05);
+  background-color: rgba(37, 211, 102, 0.02);
 }
 
-.canvas.drag-over::before {
+.canvas.drag-over::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  border: 2px dashed #1a5a1a;
-  border-radius: 8px;
+  border: 2px dashed rgba(37, 211, 102, 0.3);
+  border-radius: 12px;
   pointer-events: none;
-  animation: pulse 1s infinite;
+  animation: dropHint 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+@keyframes dropHint {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Smooth drag animations */
+.canvas-content {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dragging state improvements */
+.canvas-content > div {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Connection mode cursor */
+.canvas.connecting {
+  cursor: crosshair;
+}
+
+.canvas.connecting * {
+  cursor: crosshair !important;
+}
+
+/* Connection feedback */
+.connection-point.active {
+  background: rgba(37, 211, 102, 0.8) !important;
+  border-color: rgba(37, 211, 102, 1) !important;
+  transform: scale(1.3) !important;
+  box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.3) !important;
+}
+
+/* Connection line preview */
+.connection-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.connection-preview-line {
+  stroke: rgba(37, 211, 102, 0.5);
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+  fill: none;
+  animation: dashAnimation 1s linear infinite;
+}
+
+@keyframes dashAnimation {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 10;
+  }
+}
+
+/* Pan Instructions */
+.pan-instructions {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 8px 12px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.pan-instructions:hover {
+  opacity: 1;
+}
+
+.pan-instructions .instruction {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pan-instructions kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  color: white;
+  font-family: monospace;
+}
+
+/* Canvas Data Panel */
+.canvas-data-panel {
+  position: fixed;
+  top: 80px; /* Below zoom controls */
+  left: 20px;
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 12px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.canvas-data-panel:hover {
+  background: rgba(26, 26, 26, 0.98);
+  border-color: #1a5a1a;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.data-item:last-child {
+  border-bottom: none;
+}
+
+.data-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.data-value {
+  color: rgba(37, 211, 102, 0.9);
+  font-weight: 600;
+  font-size: 13px;
 }
 
 /* Responsive */
@@ -203,6 +391,18 @@
     bottom: 15px;
     left: 15px;
     padding: 3px;
+  }
+  
+  .canvas-data-panel {
+    top: 70px;
+    left: 15px;
+    padding: 8px;
+    min-width: 140px;
+    font-size: 11px;
+  }
+  
+  .data-value {
+    font-size: 12px;
   }
   
   .zoom-btn {

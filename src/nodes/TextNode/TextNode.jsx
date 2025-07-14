@@ -10,7 +10,7 @@ import './TextNode.css';
  * 
  * Renders a text message node with editing capabilities
  */
-const TextNode = ({ node }) => {
+const TextNode = ({ node, onConnectionStart, onConnectionEnd }) => {
   const dispatch = useAppDispatch();
   const selectedNode = useSelectedNode();
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +30,24 @@ const TextNode = ({ node }) => {
 
   const handleDelete = () => {
     dispatch(deleteNode(node.id));
+  };
+
+  const handleConnectionStart = (e, isOutput) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log('TextNode: Connection start clicked', node.id, isOutput);
+    if (onConnectionStart) {
+      onConnectionStart(node.id, isOutput);
+    }
+  };
+
+  const handleConnectionEnd = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log('TextNode: Connection end clicked', node.id);
+    if (onConnectionEnd) {
+      onConnectionEnd(node.id);
+    }
   };
 
   return (
@@ -81,9 +99,6 @@ const TextNode = ({ node }) => {
         </div>
         
         <div className="node-info">
-          <p className="channel-info">
-            This message will be sent to the user using the <strong>"WhatsApp"</strong> channel.
-          </p>
           <p className="node-id">
             Node: <span>#{node.id}</span>
           </p>
@@ -91,8 +106,46 @@ const TextNode = ({ node }) => {
       </div>
       
       {/* Connection points */}
-      <div className="connection-point input" title="Input"></div>
-      <div className="connection-point output" title="Output"></div>
+      <div 
+        className="connection-point input" 
+        title="Input - Click to complete connection"
+        onClick={(e) => handleConnectionEnd(e)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onMouseEnter={(e) => {
+          e.target.classList.add('active');
+          console.log('TextNode: Mouse enter input connection point');
+        }}
+        onMouseLeave={(e) => {
+          e.target.classList.remove('active');
+        }}
+        style={{ 
+          display: 'block',
+          position: 'absolute',
+          zIndex: 1000,
+          pointerEvents: 'auto'
+        }}
+      ></div>
+      <div 
+        className="connection-point output" 
+        title="Output - Click to start connection"
+        onClick={(e) => handleConnectionStart(e, true)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onMouseEnter={(e) => {
+          e.target.classList.add('active');
+          console.log('TextNode: Mouse enter output connection point');
+        }}
+        onMouseLeave={(e) => {
+          e.target.classList.remove('active');
+        }}
+        style={{ 
+          display: 'block',
+          position: 'absolute',
+          zIndex: 1000,
+          pointerEvents: 'auto'
+        }}
+      ></div>
     </div>
   );
 };

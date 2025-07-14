@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { DND_ITEM_TYPES } from '../../constants/dndTypes';
 import { useAppDispatch } from '../../store/hooks';
@@ -6,16 +6,28 @@ import { selectNode } from '../../store/flowSlice';
 
 const DraggableNode = ({ children, node }) => {
   const dispatch = useAppDispatch();
+  const nodeRef = useRef(null);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DND_ITEM_TYPES.EXISTING_NODE,
-    item: () => {
+    item: (monitor) => {
+      // Calculate the offset from the mouse position to the node's top-left corner
+      const sourceClientOffset = monitor.getInitialClientOffset();
+      const sourceOffset = monitor.getInitialSourceClientOffset();
+      
+      const dragOffset = {
+        x: sourceClientOffset.x - sourceOffset.x,
+        y: sourceClientOffset.y - sourceOffset.y
+      };
+
       // Bring node to front when drag starts
       dispatch(selectNode(node.id));
+      
       return {
         nodeId: node.id, 
         nodeType: node.type,
-        initialPosition: node.position 
+        initialPosition: node.position,
+        dragOffset: dragOffset
       };
     },
     collect: (monitor) => ({
@@ -38,17 +50,21 @@ const DraggableNode = ({ children, node }) => {
 
   return (
     <div 
-      ref={drag}
+      ref={(el) => {
+        drag(el);
+        nodeRef.current = el;
+      }}
       onClick={handleClick}
       style={{
-        opacity: isDragging ? 0.8 : 1,
-        cursor: isDragging ? 'grabbing' : 'move',
+        opacity: isDragging ? 0.85 : 1,
+        cursor: isDragging ? 'grabbing' : 'grab',
         position: 'absolute',
         left: node.position.x,
         top: node.position.y,
         zIndex: isDragging ? 9999 : (node.zIndex || 1),
-        transform: isDragging ? 'scale(1.02) rotate(1deg)' : 'none',
-        transition: isDragging ? 'none' : 'all 0.2s ease'
+        transform: isDragging ? 'scale(1.01) rotate(0.5deg)' : 'none',
+        transition: isDragging ? 'none' : 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
+        pointerEvents: 'auto'
       }}
     >
       {children}

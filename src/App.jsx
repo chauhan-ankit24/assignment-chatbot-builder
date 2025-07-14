@@ -17,6 +17,9 @@ import Navbar from "./components/layout/Navbar";
 import Sidebar from "./components/layout/Sidebar";
 import Canvas from "./components/layout/Canvas";
 
+// Redux hooks
+import { useIsSidebarCollapsed } from './store/hooks';
+
 // Global styles
 import "./App.css";
 
@@ -27,6 +30,8 @@ import "./App.css";
  * for drag-and-drop functionality across the entire app.
  */
 function AppContent() {
+  const isCollapsed = useIsSidebarCollapsed();
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="app">
@@ -36,7 +41,7 @@ function AppContent() {
         {/* Main application content */}
         <div className="app-content">
           {/* Canvas area for building flows */}
-          <main className="main-content">
+          <main className={`main-content ${isCollapsed ? 'sidebar-collapsed' : ''}`}>
             <div className="canvas-area">
               <Canvas />
             </div>
