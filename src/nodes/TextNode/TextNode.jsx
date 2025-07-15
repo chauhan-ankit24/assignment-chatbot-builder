@@ -35,7 +35,6 @@ const TextNode = ({ node, onConnectionStart, onConnectionEnd }) => {
   const handleConnectionStart = (e, isOutput) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('TextNode: Connection start clicked', node.id, isOutput);
     if (onConnectionStart) {
       onConnectionStart(node.id, isOutput);
     }
@@ -44,7 +43,6 @@ const TextNode = ({ node, onConnectionStart, onConnectionEnd }) => {
   const handleConnectionEnd = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('TextNode: Connection end clicked', node.id);
     if (onConnectionEnd) {
       onConnectionEnd(node.id);
     }
@@ -114,7 +112,6 @@ const TextNode = ({ node, onConnectionStart, onConnectionEnd }) => {
         onMouseUp={(e) => e.stopPropagation()}
         onMouseEnter={(e) => {
           e.target.classList.add('active');
-          console.log('TextNode: Mouse enter input connection point');
         }}
         onMouseLeave={(e) => {
           e.target.classList.remove('active');
@@ -134,7 +131,6 @@ const TextNode = ({ node, onConnectionStart, onConnectionEnd }) => {
         onMouseUp={(e) => e.stopPropagation()}
         onMouseEnter={(e) => {
           e.target.classList.add('active');
-          console.log('TextNode: Mouse enter output connection point');
         }}
         onMouseLeave={(e) => {
           e.target.classList.remove('active');

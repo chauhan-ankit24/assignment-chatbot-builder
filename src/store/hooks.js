@@ -1,9 +1,3 @@
-/**
- * Custom Redux Hooks
- * 
- * This file provides custom hooks for accessing Redux state and actions.
- * These hooks use memoized selectors for optimal performance.
- */
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   selectNodes, 
@@ -17,15 +11,10 @@ import {
   selectShowSettings,
 } from './selectors';
 
-/**
- * Base Redux hooks
- */
 export const useAppDispatch = () => useDispatch();
 export const useAppSelector = (selector) => useSelector(selector);
 
-/**
- * Flow-related hooks
- */
+// Flow-related hooks
 export const useNodes = () => useAppSelector(selectNodes);
 export const useSelectedNode = () => useAppSelector(state => state.flow.selectedNode);
 export const useDraggedNode = () => useAppSelector(state => state.flow.draggedNode);
@@ -34,30 +23,18 @@ export const useCanvasPosition = () => useAppSelector(state => state.flow.canvas
 export const useZoom = () => useAppSelector(state => state.flow.zoom);
 export const useMaxZIndex = () => useAppSelector(state => state.flow.maxZIndex);
 
-/**
- * UI-related hooks
- */
+// UI-related hooks
 export const useIsSidebarCollapsed = () => useAppSelector(selectIsSidebarCollapsed);
 export const useSelectedNodeType = () => useAppSelector(state => state.ui.selectedNodeType);
 export const useIsDragging = () => useAppSelector(state => state.ui.isDragging);
 export const useShowSettings = () => useAppSelector(selectShowSettings);
 export const useTheme = () => useAppSelector(selectTheme);
 
-/**
- * Computed state hooks using memoized selectors
- */
+// Computed state hooks
 export const useNodeCount = () => useAppSelector(selectNodeCount);
 export const useConnectionCount = () => useAppSelector(selectConnectionCount);
-
-/**
- * Parameterized hooks
- */
 export const useNodeById = (nodeId) => useAppSelector(state => selectNodeById(state, nodeId));
 export const useNodesByType = (nodeType) => useAppSelector(state => selectNodesByType(state, nodeType));
-
-/**
- * Complex computed hooks
- */
 export const useNodesSortedByZIndex = () => useAppSelector(selectNodesSortedByZIndex);
 
 /**

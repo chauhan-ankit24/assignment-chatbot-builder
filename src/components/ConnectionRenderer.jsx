@@ -24,12 +24,6 @@ const ConnectionRenderer = ({ nodes, zoom = 1 }) => {
     }
   });
 
-  // Debug logging
-  console.log('ConnectionRenderer - Connections:', connections.length);
-  if (connections.length > 0) {
-    console.log('ConnectionRenderer - Connection details:', connections);
-  }
-
   return (
     <div className="connection-renderer" style={{
       position: 'absolute',

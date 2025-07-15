@@ -1,37 +1,13 @@
-/**
- * Utility Functions
- * 
- * Common utility functions used throughout the application.
- */
-
-/**
- * Generate a unique identifier
- * @param {string} prefix - Optional prefix for the ID
- * @returns {string} Unique identifier
- */
 export const generateId = (prefix = '') => {
   const timestamp = Date.now().toString(36);
   const randomPart = Math.random().toString(36).substring(2, 8);
   return prefix ? `${prefix}_${timestamp}_${randomPart}` : `${timestamp}_${randomPart}`;
 };
 
-/**
- * Clamp a number between min and max values
- * @param {number} value - Value to clamp
- * @param {number} min - Minimum value
- * @param {number} max - Maximum value
- * @returns {number} Clamped value
- */
 export const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max);
 };
 
-/**
- * Debounce a function
- * @param {Function} func - Function to debounce
- * @param {number} delay - Delay in milliseconds
- * @returns {Function} Debounced function
- */
 export const debounce = (func, delay) => {
   let timeoutId;
   return (...args) => {

@@ -2,24 +2,18 @@ import React from 'react';
 import { BiStopCircle } from 'react-icons/bi';
 import './EndNode.css';
 
-/**
- * EndNode Component
- * Renders an end node with simple UI
- */
 const EndNode = ({ node, onConnectionStart, onConnectionEnd }) => {
-  const handleConnectionStart = (e, isOutput) => {
+  const handleConnectionStart = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('EndNode: Connection start clicked', node.id);
     if (onConnectionStart) {
-      onConnectionStart(node.id, isOutput);
+      onConnectionStart(node.id, false);
     }
   };
 
   const handleConnectionEnd = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('EndNode: Connection end clicked', node.id);
     if (onConnectionEnd) {
       onConnectionEnd(node.id);
     }
@@ -43,7 +37,6 @@ const EndNode = ({ node, onConnectionStart, onConnectionEnd }) => {
         onMouseUp={(e) => e.stopPropagation()}
         onMouseEnter={(e) => {
           e.target.classList.add('active');
-          console.log('EndNode: Mouse enter connection point');
         }}
         onMouseLeave={(e) => {
           e.target.classList.remove('active');

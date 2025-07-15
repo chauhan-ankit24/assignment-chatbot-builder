@@ -1,0 +1,361 @@
+.flow-builder {
+  display: flex;
+  height: 100vh;
+  background: #1a1a1a;
+}
+
+.flow-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+/* Flow Statistics Panel */
+.flow-stats-panel {
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px;
+  min-width: 200px;
+  backdrop-filter: blur(10px);
+}
+
+.flow-stats h4 {
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.stat-value {
+  color: #25d366;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Node Properties Panel */
+.node-properties-panel {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 300px;
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.properties-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #404040;
+  background: rgba(37, 211, 102, 0.1);
+}
+
+.properties-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.properties-content {
+  padding: 16px;
+}
+
+.property-group {
+  margin-bottom: 16px;
+}
+
+.property-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #b3b3b3;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.property-input,
+.property-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #404040;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.property-input:focus,
+.property-textarea:focus {
+  outline: none;
+  border-color: #25d366;
+}
+
+.property-input.disabled {
+  background: rgba(255, 255, 255, 0.02);
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.property-textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+}
+
+.property-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #404040;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+/* Custom React Flow Styles */
+.react-flow__node {
+  font-family: inherit;
+}
+
+.react-flow__edge {
+  stroke: #25d366;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected {
+  stroke: #ffffff;
+}
+
+.react-flow__connectionline {
+  stroke: #25d366;
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.react-flow__controls button {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.react-flow__controls button:hover {
+  color: #25d366;
+}
+
+.react-flow__minimap {
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+}
+
+.react-flow__attribution {
+  background: rgba(26, 26, 26, 0.8);
+  color: #666666;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Zoom Controls Panel */
+.zoom-controls-panel {
+  background: rgba(26, 26, 26, 0.95);
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zoom-btn {
+  background: rgba(37, 211, 102, 0.1);
+  border: 1px solid #25d366;
+  border-radius: 6px;
+  padding: 8px;
+  color: #25d366;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+}
+
+.zoom-btn:hover {
+  background: rgba(37, 211, 102, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+}
+
+.zoom-btn:active {
+  transform: translateY(0);
+}
+
+.zoom-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.zoom-btn.fit-view {
+  border-color: #ffc107;
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.1);
+}
+
+.zoom-btn.fit-view:hover {
+  background: rgba(255, 193, 7, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+}
+
+/* Enhanced connection handles visibility */
+.react-flow__handle {
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.react-flow__node:hover .react-flow__handle {
+  opacity: 1;
+}
+
+/* Multiple handles styling */
+.react-flow__handle {
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.react-flow__handle:hover {
+  opacity: 1;
+  transform: scale(1.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.react-flow__node:hover .react-flow__handle {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Handle positioning improvements */
+.connection-handle {
+  z-index: 10;
+}
+
+.input-handle {
+  border-radius: 50%;
+}
+
+.output-handle {
+  border-radius: 50%;
+}
+
+/* Node hover effects for better handle visibility */
+.react-flow__node:hover {
+  z-index: 1000;
+}
+
+.react-flow__node:hover .react-flow__handle {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Different colors for different node types */
+.start-node-flow .react-flow__handle {
+  background: #25d366 !important;
+}
+
+.text-node-flow .react-flow__handle {
+  background: #25d366 !important;
+}
+
+.process-node-flow .react-flow__handle {
+  background: #ffc107 !important;
+}
+
+.end-node-flow .react-flow__handle {
+  background: #dc3545 !important;
+}

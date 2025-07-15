@@ -26,14 +26,14 @@
 
 .main-content {
   flex: 1;
-  padding: 20px;
   margin-right: 300px; /* Account for sidebar width */
   transition: margin-right 0.3s ease;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
 }
 
 .main-content.sidebar-collapsed {
-  margin-right: 60px; /* Account for collapsed sidebar width */
+  margin-right: 70px; /* Account for collapsed sidebar width */
 }
 
 .canvas-area {

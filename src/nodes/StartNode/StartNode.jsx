@@ -2,24 +2,18 @@ import React from 'react';
 import { BiPlayCircle } from 'react-icons/bi';
 import './StartNode.css';
 
-/**
- * StartNode Component
- * Renders a start node with simple UI
- */
 const StartNode = ({ node, onConnectionStart, onConnectionEnd }) => {
-  const handleConnectionStart = (e, isOutput) => {
+  const handleConnectionStart = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('StartNode: Connection start clicked', node.id);
     if (onConnectionStart) {
-      onConnectionStart(node.id, isOutput);
+      onConnectionStart(node.id, true);
     }
   };
 
   const handleConnectionEnd = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('StartNode: Connection end clicked', node.id);
     if (onConnectionEnd) {
       onConnectionEnd(node.id);
     }
@@ -43,7 +37,6 @@ const StartNode = ({ node, onConnectionStart, onConnectionEnd }) => {
         onMouseUp={(e) => e.stopPropagation()}
         onMouseEnter={(e) => {
           e.target.classList.add('active');
-          console.log('StartNode: Mouse enter connection point');
         }}
         onMouseLeave={(e) => {
           e.target.classList.remove('active');

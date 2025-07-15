@@ -37,11 +37,6 @@ const ConnectionLine = ({ sourceNode, targetNode, zoom = 1 }) => {
 
   const pathData = `M ${sourceX} ${sourceY} C ${controlX1} ${sourceY}, ${controlX2} ${targetY}, ${targetX} ${targetY}`;
 
-  // Debug logging
-  console.log('ConnectionLine - Path data:', pathData);
-  console.log('ConnectionLine - Source:', { x: sourceX, y: sourceY });
-  console.log('ConnectionLine - Target:', { x: targetX, y: targetY });
-
   return (
     <svg 
       className="connection-line-svg"

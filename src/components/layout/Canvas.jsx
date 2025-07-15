@@ -234,7 +234,6 @@ const Canvas = () => {
    * Handle connection start
    */
   const handleConnectionStart = useCallback((nodeId, isOutput) => {
-    console.log('Connection started:', { nodeId, isOutput });
     setConnectionState({
       isConnecting: true,
       sourceNodeId: nodeId,
@@ -247,19 +246,16 @@ const Canvas = () => {
    * Handle connection end
    */
   const handleConnectionEnd = useCallback((targetNodeId) => {
-    console.log('Connection end:', { targetNodeId, connectionState });
     if (connectionState.isConnecting && connectionState.sourceNodeId && targetNodeId !== connectionState.sourceNodeId) {
       // Create connection based on direction
       if (connectionState.isOutput) {
         // Output to input connection
-        console.log('Creating connection:', connectionState.sourceNodeId, '->', targetNodeId);
         dispatch(createConnection({
           sourceNodeId: connectionState.sourceNodeId,
           targetNodeId: targetNodeId
         }));
       } else {
         // Input to output connection (reverse)
-        console.log('Creating reverse connection:', targetNodeId, '->', connectionState.sourceNodeId);
         dispatch(createConnection({
           sourceNodeId: targetNodeId,
           targetNodeId: connectionState.sourceNodeId

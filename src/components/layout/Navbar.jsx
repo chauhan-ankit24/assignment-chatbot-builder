@@ -1,29 +1,46 @@
-/**
- * Navbar Component
- * 
- * Top navigation bar with branding, navigation links, and action buttons.
- * Provides consistent navigation across the application.
- */
 import React from 'react';
 import { SiChatbot } from 'react-icons/si';
 import { useAppDispatch } from '../../store/hooks';
 import { clearFlow } from '../../store/flowSlice';
-import { useFlowStats } from '../../store/hooks';
+import { useToast } from '../common/ToastProvider';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ nodes = [], edges = [] }) => {
   const dispatch = useAppDispatch();
-  const { nodeCount } = useFlowStats();
+  const { showSuccess, showError, showInfo } = useToast();
+  const nodeCount = nodes.length;
 
-  /**
-   * Handle saving the current flow
-   * In a real app, this would save to a backend service
-   */
   const handleSaveFlow = () => {
-    // TODO: Implement actual save functionality
-    console.log('Saving flow...');
-    // For now, just show a success message
-    alert('Flow saved successfully!');
+    // Check if there are any nodes
+    if (nodes.length === 0) {
+      showError('Cannot save empty flow. Please add some nodes first.');
+      return;
+    }
+
+    // Check for unconnected nodes
+    const connectedNodeIds = new Set();
+    
+    // Add all nodes that are part of connections
+    edges.forEach(edge => {
+      connectedNodeIds.add(edge.source);
+      connectedNodeIds.add(edge.target);
+    });
+
+    // Find nodes that are not connected
+    const unconnectedNodes = nodes.filter(node => !connectedNodeIds.has(node.id));
+
+    if (unconnectedNodes.length > 0) {
+      const nodeNames = unconnectedNodes.map(node => node.data.label || node.type).join(', ');
+      const message = unconnectedNodes.length === 1 
+        ? `One node is not connected: ${nodeNames}. Please connect it before saving.`
+        : `${unconnectedNodes.length} nodes are not connected: ${nodeNames}. Please connect them before saving.`;
+      
+      showError(message, 5000); // Show error for 5 seconds
+      return;
+    }
+
+    // If validation passes, save the flow
+    showSuccess('Flow saved successfully!');
   };
 
   /**
@@ -31,15 +48,9 @@ const Navbar = () => {
    * Opens a preview of the current flow
    */
   const handlePreview = () => {
-    // TODO: Implement preview functionality
-    console.log('Opening preview...');
     alert('Preview feature coming soon!');
   };
 
-  /**
-   * Handle creating a new flow
-   * Clears the current flow after confirmation
-   */
   const handleNewFlow = () => {
     if (nodeCount > 0) {
       const confirmed = window.confirm(
@@ -56,8 +67,6 @@ const Navbar = () => {
    * Exports the flow data in JSON format
    */
   const handleExport = () => {
-    // TODO: Implement export functionality
-    console.log('Exporting flow...');
     alert('Export feature coming soon!');
   };
 

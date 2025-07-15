@@ -1,20 +1,9 @@
-/**
- * Mock Data and Configuration
- * 
- * This file contains static data and configuration used throughout the application.
- * It includes node types, default messages, and canvas settings.
- */
-
 import { 
   BiMessageRounded, 
   BiPlayCircle,
   BiStopCircle
 } from 'react-icons/bi';
 
-/**
- * Available Node Types
- * Defines all node types that can be used in the flow builder
- */
 export const nodeTypes = [
   { 
     id: 'start', 
@@ -42,20 +31,12 @@ export const nodeTypes = [
   },
 ];
 
-/**
- * Default Messages for Each Node Type
- * These are the initial messages displayed when a node is created
- */
 export const defaultMessages = {
   start: 'Flow started - ready to begin!',
   message: 'Hello! How can I help you today?',
   end: 'Thank you for using our service! Have a great day!',
 };
 
-/**
- * Canvas Configuration
- * Settings for canvas behavior and appearance
- */
 export const canvasSettings = {
   gridSize: 20,                           // Grid snap size in pixels
   defaultNodePosition: { x: 200, y: 200 }, // Default position for new nodes
